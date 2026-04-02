@@ -1585,7 +1585,7 @@ def _make_dev_app(
                 headers=fwd_headers,
                 media_type=content_type or "application/octet-stream",
             )
-        except httpx.ConnectError:
+        except (httpx.ConnectError, httpx.ConnectTimeout):
             await client.aclose()
             return Response(
                 content=json.dumps({"error": "MCP server not reachable"}).encode(),
